@@ -2,6 +2,8 @@ package mx.edu.utez.proyecto1c.controller;
 
 import jakarta.validation.Valid;
 import mx.edu.utez.proyecto1c.controller.dto.RequestBodyDTO;
+import mx.edu.utez.proyecto1c.controller.dto.RequestCalculadoraDTO;
+import mx.edu.utez.proyecto1c.service.MyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +11,13 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin({"*"})// permitimos todos los origenes de peticiones
 @RequestMapping("/my-service")
 public class MyController {
+
+    private final MyService service;
+
+    //inyeccion de dependencias
+    public MyController (MyService service) {
+        this.service = service;
+    }
 
     @GetMapping("/my-service")
     public String miPrimerServicio() {
@@ -65,6 +74,10 @@ public class MyController {
             b = siguiente;
         }
         return "Luis Felipe Jimenez Quintero 4C";
+    }
+    @PostMapping("/calculadora")
+    public double calculadora(@RequestBody @Valid RequestCalculadoraDTO payload){
+        return service.calculadora(payload);
     }
 }
 
