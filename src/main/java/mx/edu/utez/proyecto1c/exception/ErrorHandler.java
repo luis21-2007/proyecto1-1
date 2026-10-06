@@ -1,6 +1,8 @@
 package mx.edu.utez.proyecto1c.exception;
 
 import mx.edu.utez.proyecto1c.exception.customExceptions.BadRequestException;
+import mx.edu.utez.proyecto1c.exception.customExceptions.PaqueteRechazadoException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -30,4 +32,12 @@ public class ErrorHandler {
         return ResponseEntity.badRequest().body(errores);
     }
 
+
+    @ExceptionHandler(PaqueteRechazadoException.class)
+    public ResponseEntity<Map<String, String>> manejarPaqueteRechazado(PaqueteRechazadoException ex) {
+        Map<String, String> respuesta = new LinkedHashMap<>();
+        respuesta.put("estatus", "RECHAZADO");
+        respuesta.put("mensaje", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
+    }
 }

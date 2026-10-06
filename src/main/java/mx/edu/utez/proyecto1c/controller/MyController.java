@@ -3,9 +3,12 @@ package mx.edu.utez.proyecto1c.controller;
 import jakarta.validation.Valid;
 import mx.edu.utez.proyecto1c.controller.dto.RequestBodyDTO;
 import mx.edu.utez.proyecto1c.controller.dto.RequestCalculadoraDTO;
+import mx.edu.utez.proyecto1c.service.EnvioService;
 import mx.edu.utez.proyecto1c.service.MyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import mx.edu.utez.proyecto1c.controller.dto.EnvioRequestDTO;
+import mx.edu.utez.proyecto1c.controller.dto.EnvioResponseDTO;
 
 @RestController
 @CrossOrigin({"*"})// permitimos todos los origenes de peticiones
@@ -13,10 +16,12 @@ import org.springframework.web.bind.annotation.*;
 public class MyController {
 
     private final MyService service;
+    private final EnvioService envio;
 
     //inyeccion de dependencias
-    public MyController (MyService service) {
+    public MyController (MyService service,EnvioService envio) {
         this.service = service;
+        this.envio = envio;
     }
 
     @GetMapping("/my-service")
@@ -78,6 +83,11 @@ public class MyController {
     @PostMapping("/calculadora")
     public double calculadora(@RequestBody @Valid RequestCalculadoraDTO payload){
         return service.calculadora(payload);
+    }
+    @PostMapping("/envio")
+    public ResponseEntity<EnvioResponseDTO> calcularEnvio(@RequestBody @Valid EnvioRequestDTO payload) {
+        EnvioResponseDTO respuesta = envio.calcularEnvio(payload);
+        return ResponseEntity.ok(respuesta);
     }
 }
 
