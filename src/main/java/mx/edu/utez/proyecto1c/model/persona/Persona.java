@@ -23,6 +23,7 @@ public class Persona {
     private String primerApellido;
     private String segundoApellido;
 
+    @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
     private String  correo;
     private String curp;
