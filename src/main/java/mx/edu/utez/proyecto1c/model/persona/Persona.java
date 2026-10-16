@@ -29,7 +29,7 @@ public class Persona {
     private Date fechaNacimiento;
     private String  correo;
     private String curp;
-
+/*
     @ManyToMany
     @JoinTable(
             name = "persona_cursos",
@@ -38,4 +38,6 @@ public class Persona {
     )
     private List<Curso> cursos;
 
+
+ */
 }
